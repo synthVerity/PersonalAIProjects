@@ -217,7 +217,8 @@ void AIPlayer()
 		}
 	}
 
-	// If no obvious winning moves or blocks to be done, chooses random empty location
+	// If no obvious winning moves or blocks to be done, takes the middle slot(if open)
+	// If the middle slot is not possible, then take a random slot
 	// While it's not useful, makes the game more interesting
 	for(;;)
 	{
