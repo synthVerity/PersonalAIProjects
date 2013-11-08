@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
 	// Basic set-up of the variables and screen
 	srand(time(NULL));
 	initscr();
+	keypad(stdscr, TRUE);
 	nodelay(stdscr, TRUE);
 
 	// Whoever begins is random, to take away complete first move advantages
@@ -220,6 +221,12 @@ void AIPlayer()
 	// While it's not useful, makes the game more interesting
 	for(;;)
 	{
+		if(board[1][1] == 0)
+		{
+			board[1][1] = 2;
+			break;
+		}
+
 		i = rand() % 3;
 		j = rand() % 3;
 		if(board[i][j] == 0)
