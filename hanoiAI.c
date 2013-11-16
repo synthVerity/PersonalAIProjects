@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ncurses.h>
+#include <unistd.h>
 
 #define MAXSTACK 9
 #define EMPTYSTACK -1
@@ -17,8 +18,11 @@ void initPegs(int height, int *top);
 void displayPegs();
 void push(int peg, int *top, Disk value);
 Disk pop(int peg, int *top);
+int peek(int peg, int top);
 int isEmpty(int top);
+void AISolver(int height);
 int checkWin(int height);
+void clearPegs();
 
 int main(void)
 {
@@ -31,8 +35,7 @@ int main(void)
 	int turn = 0;
 	int top1, top2, top3;
 	int running = 1;
-//	int disks = rand() % 7 + 3;
-	int disks = 3;
+	int disks = rand() % 7 + 3;
 	Disk holder = {0};
 
 	top1 = top2 = top3 = EMPTYSTACK;
@@ -52,6 +55,11 @@ int main(void)
 		{
 			case KEY_F(1):
 				running = 0;
+				break;
+			case KEY_F(2):
+				AISolver(disks);
+				top1 = top2 = top3 = EMPTYSTACK;
+				initPegs(disks, &top1);
 				break;
 			case KEY_LEFT:
 				if(turn)
@@ -161,10 +169,20 @@ Disk pop(int peg, int *top)
 	return pegs[peg][*top+1];
 }
 
+int peek(int peg, int top)
+{
+	return pegs[peg][top].size;
+}
+
 int isEmpty(int top)
 {
 	if(top <= EMPTYSTACK) return 1;
 	else return 0;
+}
+
+void AISolver(int height)
+{
+	return;
 }
 
 int checkWin(int height)
@@ -180,4 +198,20 @@ int checkWin(int height)
 	}
 
 	return 0;
+}
+
+void clearPegs()
+{
+	int i, j;
+	Disk holder = {0};
+
+	for(i = 0; i < 3; i++)
+	{
+		for(j = MAXSTACK; j > 0; j--)
+		{
+			pegs[i][j] = holder;
+		}
+	}
+
+	return;
 }
